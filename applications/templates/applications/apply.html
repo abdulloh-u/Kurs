@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Kursga ariza topshirish — IT Shaharcha</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+        }
+        .form-control, .form-select {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25);
+        }
+        label {
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-lg">
+                    <h2 class="text-center mb-4 text-white">IT Shaharcha — Ariza topshirish</h2>
+                    
+                    {% if success %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endif %}
+                    
+                    {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Ism</label>
+                            <input type="text" name="first_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Familiya</label>
+                            <input type="text" name="last_name" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Telefon raqam</label>
+                            <input type="text" name="phone_number" class="form-control" placeholder="+998901234567" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Yosh</label>
+                            <input type="number" name="school_grade" class="form-control" placeholder="Masalan: 18" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kursni tanlang</label>
+                            <select name="course" class="form-select" required>
+                                <option value="">Kursni tanlang...</option>
+                                {% for course in courses %}
+                                    <option value="{{ course.id }}">{{ course.title }} — {{ course.price|floatformat:0 }} so'm</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Izoh (ixtiyoriy)</label>
+                            <textarea name="comment" class="form-control" rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Arizani yuborish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

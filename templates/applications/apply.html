@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}Ariza topshirish - IT Shaharcha{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="row justify-content-center my-4">
+    <div class="col-lg-10">
+        <div class="row g-4 align-items-stretch">
+            <!-- Chap tomon: Ma'lumot va afzalliklar -->
+            <div class="col-md-5 d-flex flex-column justify-content-between p-4 rounded-4 border bg-dark" style="border-color: #30363d !important;">
+                <div>
+                    <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill mb-3 fw-bold">
+                        <i class="fa-solid fa-sparkles me-1"></i> Qabul ochiq
+                    </span>
+                    <h2 class="fw-bold text-white mb-3 display-6">Kelajagingizni biz bilan quring!</h2>
+                    <p class="text-light opacity-75 small mb-4" style="line-height: 1.6;">
+                        Arizangizni qoldiring va bizning mutaxassislarimiz siz bilan tez orada bog'lanib, bepul konsultatsiya hamda o'quv dasturi haqida to'liq ma'lumot berishadi.
+                    </p>
+
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-primary bg-opacity-20 text-primary p-2.5 rounded-3 border border-primary border-opacity-25">
+                                <i class="fa-solid fa-user-graduate fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-white mb-0">Tajribali ustozlar</h6>
+                                <span class="text-light opacity-75 small">Amaliyotchi kuchli mentorlar</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-success bg-opacity-20 text-success p-2.5 rounded-3 border border-success border-opacity-25">
+                                <i class="fa-solid fa-laptop-code fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-white mb-0">Amaliy loyihalar</h6>
+                                <span class="text-light opacity-75 small">Xalqaro standartdagi ta'lim</span>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-warning bg-opacity-20 text-warning p-2.5 rounded-3 border border-warning border-opacity-25">
+                                <i class="fa-solid fa-award fs-5"></i>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold text-white mb-0">Sertifikat</h6>
+                                <span class="text-light opacity-75 small">Kursni bitirgach beriladigan hujjat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-top border-secondary border-opacity-25">
+                    <span class="text-light opacity-75 small d-block mb-1"><i class="fa-solid fa-headset text-warning me-1"></i> Savollaringiz bormi?</span>
+                    <a href="tel:+998901234567" class="text-white fw-bold text-decoration-none fs-6">+998 (90) 123-4567</a>
+                </div>
+            </div>
+
+            <!-- O'ng tomon: Ariza Formasi -->
+            <div class="col-md-7">
+                <div class="p-4 p-md-5 rounded-4 border bg-dark shadow-lg" style="border-color: #30363d !important;">
+                    <h3 class="fw-bold text-white mb-1">Kursga ariza qoldirish</h3>
+                    <p class="text-light opacity-75 small mb-4">Maydonlarni to'ldiring va «Arizani yuborish» tugmasini bosing</p>
+
+                    {% if error %}
+                        <div class="alert alert-danger bg-danger bg-opacity-20 text-white border-danger border-opacity-50 rounded-3 mb-4">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i> {{ error }}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST" action="{% url 'apply_course' %}">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-white fw-semibold small">Ism <span class="text-danger">*</span></label>
+                                <input type="text" name="first_name" required class="form-control bg-dark text-white border-secondary shadow-none py-2.5" placeholder="Ali" style="border-color: #484f58 !important; color: #ffffff !important;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white fw-semibold small">Familiya <span class="text-danger">*</span></label>
+                                <input type="text" name="last_name" required class="form-control bg-dark text-white border-secondary shadow-none py-2.5" placeholder="Valiyev" style="border-color: #484f58 !important; color: #ffffff !important;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white fw-semibold small">Telefon raqam <span class="text-danger">*</span></label>
+                                <input type="text" name="phone_number" required class="form-control bg-dark text-white border-secondary shadow-none py-2.5" placeholder="+998 90 123 45 67" style="border-color: #484f58 !important; color: #ffffff !important;">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-white fw-semibold small">Yosh (10-36) <span class="text-danger">*</span></label>
+                                <input type="number" name="age" min="10" max="36" required class="form-control bg-dark text-white border-secondary shadow-none py-2.5" placeholder="Masalan: 18" style="border-color: #484f58 !important; color: #ffffff !important;">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-white fw-semibold small">Tanlangan kurs <span class="text-danger">*</span></label>
+                                <select name="course" required class="form-select bg-dark text-white border-secondary shadow-none py-2.5" style="border-color: #484f58 !important; color: #ffffff !important;">
+                                    <option value="" disabled selected>Kursni tanlang...</option>
+                                    {% for c in courses %}
+                                        <option value="{{ c.id }}" class="bg-dark text-white">{{ c.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-white fw-semibold small">Qo'shimcha izoh</label>
+                                <textarea name="comment" rows="3" class="form-control bg-dark text-white border-secondary shadow-none" placeholder="Savollaringiz yoki qo'shimcha istaklaringiz bo'lsa yozib qoldiring..." style="border-color: #484f58 !important; color: #ffffff !important;"></textarea>
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-warning w-100 py-3 fw-bold text-dark rounded-3 shadow text-decoration-none fs-6">
+                                    <i class="fa-solid fa-paper-plane me-2"></i> Arizani yuborish
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.form-control::placeholder, .form-select::placeholder {
+    color: #8b949e !important;
+    opacity: 0.9;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #f1e05a !important;
+    box-shadow: 0 0 0 0.25rem rgba(241, 224, 90, 0.15) !important;
+    background-color: #161b22 !important;
+    color: #ffffff !important;
+}
+</style>
+{% endblock %}

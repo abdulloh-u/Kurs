@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Barcha kurslar - IT Shaharcha{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Yuqori qism banner -->
+<div class="p-4 p-md-5 mb-5 rounded-4 position-relative overflow-hidden shadow-lg" style="background: linear-gradient(135deg, #161b22 0%, #0d1117 100%); border: 1px solid #30363d;">
+    <div class="row align-items-center">
+        <div class="col-lg-12">
+            <span class="badge bg-warning text-dark px-3 py-1.5 rounded-pill fw-bold mb-3 d-inline-flex align-items-center gap-1.5" style="font-size: 13px;">
+                <i class="bi bi-journal-code"></i> Ta'lim yo'nalishlari
+            </span>
+            <h1 class="display-5 fw-bold text-white mb-2">Bizning zamonaviy kurslarimiz</h1>
+            <p class="text-light opacity-75 fs-6 mb-0" style="line-height: 1.6;">
+                O'zingizga yoqqan yo'nalishni tanlang va professional mutaxassis bo'ling. Amaliy loyihalar va tajribali ustozlar ko'magida bilim oling.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Kurslar Ro'yxati -->
+<div class="row g-4 mb-5">
+    {% for course in courses %}
+        <div class="col-md-4">
+            <div class="card h-100 text-white border-0 shadow-lg rounded-4 overflow-hidden" style="border: 1px solid #30363d !important; background: #161b22 !important;">
+                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                    <div>
+                        <!-- Faqat Davomiyligi (Oy) nishoni -->
+                        <div class="mb-3">
+                            <span class="badge bg-primary text-white border border-primary border-opacity-50 px-3 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-1.5" style="font-size: 13px; background-color: #0d6efd !important;">
+                                <i class="bi bi-clock-fill text-warning"></i> {{ course.duration }}
+                            </span>
+                        </div>
+
+                        <!-- Kurs Nomi -->
+                        <h4 class="fw-bold text-white mb-2 fs-5">{{ course.title }}</h4>
+
+                        <!-- Kurs Tavsifi -->
+                        <p class="text-light opacity-75 small mb-4" style="line-height: 1.6;">
+                            {{ course.description|truncatewords:18 }}
+                        </p>
+                    </div>
+
+                    <!-- Pastki Narx va Tugma -->
+                    <div class="pt-3 border-top border-secondary border-opacity-25 d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="text-secondary d-block" style="font-size: 11px;">Kurs narxi:</span>
+                            <span class="fw-bold text-warning fs-5">{{ course.price|floatformat:0 }} so'm</span>
+                        </div>
+                        <a href="{% url 'course_detail' course.slug %}" class="btn btn-sm btn-warning px-3 py-2 fw-bold text-dark rounded-3 shadow-sm text-decoration-none d-inline-flex align-items-center gap-1">
+                            Batafsil <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5 text-light opacity-75">
+            <i class="bi bi-journal-x fs-1 mb-2 d-block text-secondary"></i>
+            Hozircha kurslar mavjud emas.
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

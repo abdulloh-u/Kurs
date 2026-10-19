@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Shaharcha — Zamonaviy ta'lim va kelajak kasblari markazi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0b0f19;
+            color: #e6edf3;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .navbar {
+            background-color: #111622;
+            border-bottom: 1px solid #21262d;
+        }
+        .card, .feature-card, .faq-card, .step-card {
+            background-color: #111622;
+            border: 1px solid #21262d;
+            border-radius: 12px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .feature-card:hover {
+            border-color: #388bfd;
+            transform: translateY(-3px);
+        }
+        .text-gray {
+            color: #848d97 !important;
+        }
+        .accordion-item {
+            background-color: #111622 !important;
+            border: 1px solid #21262d !important;
+            color: #e6edf3 !important;
+        }
+        .accordion-button {
+            background-color: #161c28 !important;
+            color: #ffffff !important;
+            box-shadow: none !important;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #1f2937 !important;
+            color: #58a6ff !important;
+        }
+        .accordion-body {
+            color: #848d97 !important;
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #2ea043;
+            border-radius: 2px;
+        }
+
+        /* Kurslar kartochkasi */
+        .course-card {
+            background-color: #111622;
+            border: 1px solid #21262d;
+            border-radius: 14px;
+            padding: 24px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .course-card:hover {
+            border-color: #388bfd;
+            transform: translateY(-3px);
+        }
+        .badge-duration {
+            background-color: #1f6feb;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        .course-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+        .course-desc {
+            color: #848d97;
+            font-size: 0.92rem;
+            margin-bottom: 24px;
+        }
+        .course-price-label {
+            color: #848d97;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+        .course-price-val {
+            color: #d29922;
+            font-weight: 800;
+            font-size: 1.35rem;
+        }
+        .btn-batafsil {
+            background-color: #d29922;
+            color: #0b0f19;
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 8px 18px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .btn-batafsil:hover {
+            background-color: #bb881c;
+            color: #0b0f19;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-4 py-3 sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white d-flex align-items-center" href="/">
+                <span class="me-2 p-2 bg-primary rounded fs-5">💻</span> IT Shaharcha
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="/" class="text-white text-decoration-none px-2 py-1">Bosh sahifa</a>
+                    <a href="/courses/" class="text-white text-decoration-none px-2 py-1">Kurslar</a>
+                    <a href="/custom-admin/" class="text-warning text-decoration-none px-2 py-1">Qabul Paneli</a>
+                    <a href="/apply/" class="btn btn-primary px-4 fw-medium">Ariza topshirish</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container py-5">
+        
+        <!-- O'quv markazimiz haqida batafsil kirish -->
+        <div class="row mb-5 align-items-center">
+            <div class="col-lg-12">
+                <div class="card p-5 shadow-lg" style="background: linear-gradient(135deg, #111622 0%, #1a2233 100%);">
+                    <span class="badge bg-success mb-3 p-2 w-25 text-center" style="font-size: 0.9rem;">Farg'ona / Toshloq</span>
+                    <h1 class="display-5 fw-bold text-white mb-3">IT Shaharcha — Zamonaviy texnologiyalar va kasblar akademiyasi</h1>
+                    <p class="lead text-gray mb-4">
+                        Biz yoshlar va zamonaviy kasb egallashni istagan barcha yurtdoshlarimiz uchun noldan professional darajagacha bo'lgan chuqurlashtirilgan o'quv kurslarini taklif etamiz. Darslarimiz eng so'nggi ta'lim metodologiyalari asosida amaliyotga yo'naltirilgan holda olib boriladi.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="/apply/" class="btn btn-primary btn-lg px-4 fw-bold">Kursga yozilish</a>
+                        <a href="/courses/" class="btn btn-outline-light btn-lg px-4">Kurslarni ko'rish</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. STATISTIKA BLOKI -->
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card p-4 text-center h-100 shadow-sm">
+                    <h2 class="text-primary fw-bold mb-1 display-6">500+</h2>
+                    <p class="text-gray mb-0 fw-medium">Muvaffaqiyatli bitiruvchilar</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 text-center h-100 shadow-sm">
+                    <h2 class="text-success fw-bold mb-1 display-6">10+</h2>
+                    <p class="text-gray mb-0 fw-medium">Talabgir IT yo'nalishlar</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 text-center h-100 shadow-sm">
+                    <h2 class="text-warning fw-bold mb-1 display-6">90%</h2>
+                    <p class="text-gray mb-0 fw-medium">Ishga joylashish ko'rsatkichi</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 text-center h-100 shadow-sm">
+                    <h2 class="text-info fw-bold mb-1 display-6">100%</h2>
+                    <p class="text-gray mb-0 fw-medium">Amaliy loyihalar ustida ish</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. ASOSIY AFZALLIKLAR BLOKI -->
+        <h2 class="section-title">Nima uchun aynan "IT Shaharcha"?</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 shadow-sm">
+                    <div class="fs-2 mb-3">💻</div>
+                    <h4 class="text-white fw-bold mb-2">Zamonaviy kompyuterlar</h4>
+                    <p class="text-gray mb-0">Yuqori unumdorlikka ega zamonaviy kompyuterlar va qulay, konditsionerli sinfxonalar o'qish uchun mukammal muhit yaratadi.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 shadow-sm">
+                    <div class="fs-2 mb-3">👨‍🏫</div>
+                    <h4 class="text-white fw-bold mb-2">Kuchli mentorlar</h4>
+                    <p class="text-gray mb-0">Ko'p yillik xalqaro tajribaga ega amaliyotchi dasturchi va yetakchi IT mutaxassislardan shaxsiy saboq oling.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 h-100 shadow-sm">
+                    <div class="fs-2 mb-3">💼</div>
+                    <h4 class="text-white fw-bold mb-2">Ishga ko'maklashish</h4>
+                    <p class="text-gray mb-0">Eng yaxshi natija ko'rsatgan bitiruvchularimizga yetakchi IT kompaniyalarda amaliyot o'tash va ish topishda to'liq yordam beriladi.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. O'QUV JARAYONI BOSQICHLARI -->
+        <h2 class="section-title">Ta'lim jarayoni qanday kechadi?</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-3">
+                <div class="card p-4 h-100 text-center">
+                    <div class="badge bg-primary rounded-circle p-3 mb-3 mx-auto" style="width: 50px; height: 50px; font-size: 1.2rem;">1</div>
+                    <h5 class="text-white fw-bold">Ariza topshirish</h5>
+                    <p class="text-gray small mb-0">Saytimiz yoki Telegram botimiz orqali qisqa anketa to'ldirib ro'yxatdan o'tasiz.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 h-100 text-center">
+                    <div class="badge bg-success rounded-circle p-3 mb-3 mx-auto" style="width: 50px; height: 50px; font-size: 1.2rem;">2</div>
+                    <h5 class="text-white fw-bold">Konsultatsiya</h5>
+                    <p class="text-gray small mb-0">Mutaxassislarimiz siz bilan bog'lanib, qiziqqan yo'nalishingiz bo'yicha maslahat berishadi.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 h-100 text-center">
+                    <div class="badge bg-warning text-dark rounded-circle p-3 mb-3 mx-auto" style="width: 50px; height: 50px; font-size: 1.2rem;">3</div>
+                    <h5 class="text-white fw-bold">Darslarga qatnashish</h5>
+                    <p class="text-gray small mb-0">Haftasiga 3 kun professional mentorlar nazoratida qiziqarli amaliy darslarda qatnasha boshlaysiz.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-4 h-100 text-center">
+                    <div class="badge bg-info text-dark rounded-circle p-3 mb-3 mx-auto" style="width: 50px; height: 50px; font-size: 1.2rem;">4</div>
+                    <h5 class="text-white fw-bold">Sertifikat va Ish</h5>
+                    <p class="text-gray small mb-0">Kursni muvaffaqiyatli yakunlab, maxsus sertifikatga ega bo'lasiz va karyerangizni boshlaysiz.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. KURSLAR RO'YXATI -->
+        <h2 class="section-title">Bizning yo'nalishlar va kurslar</h2>
+        <div class="row g-4 mb-5">
+            {% if courses %}
+                {% for course in courses %}
+                    <div class="col-md-4">
+                        <div class="course-card">
+                            <div>
+                                <span class="badge-duration">⏱ {{ course.duration|default:"3" }} oy</span>
+                                <h3 class="course-title">{{ course.title }}</h3>
+                                <p class="course-desc">{{ course.description|truncatechars:110 }}</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-end pt-3 border-top border-secondary">
+                                <div>
+                                    <div class="course-price-label">Kurs narxi:</div>
+                                    <div class="course-price-val">{{ course.price|floatformat:0 }} so'm</div>
+                                </div>
+                                <a href="{% if course.slug %}/courses/{{ course.slug }}/{% else %}/courses/{{ course.id }}/{% endif %}" class="btn-batafsil">Batafsil &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div>
+                            <span class="badge-duration">⏱ 2 oy</span>
+                            <h3 class="course-title">Kompyuter savodxonligi</h3>
+                            <p class="course-desc">Kompyuterda ishlash asoslari, Windows, Office dasturlari va internetdan xavfsiz foydalanish.</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end pt-3 border-top border-secondary">
+                            <div>
+                                <div class="course-price-label">Kurs narxi:</div>
+                                <div class="course-price-val">300000 so'm</div>
+                            </div>
+                            <a href="/courses/kompyuter-savodxonligi/" class="btn-batafsil">Batafsil &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div>
+                            <span class="badge-duration">⏱ 5 oy</span>
+                            <h3 class="course-title">Python dasturlash tili</h3>
+                            <p class="course-desc">Dasturlash asoslari, OOP, Telegram botlar yaratish va Django veb-freymvorki orqali real loyihalar tuzish.</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end pt-3 border-top border-secondary">
+                            <div>
+                                <div class="course-price-label">Kurs narxi:</div>
+                                <div class="course-price-val">500000 so'm</div>
+                            </div>
+                            <a href="/courses/python-dasturlash-tili/" class="btn-batafsil">Batafsil &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="course-card">
+                        <div>
+                            <span class="badge-duration">⏱ 4 oy</span>
+                            <h3 class="course-title">Ingliz tili (IT English)</h3>
+                            <p class="course-desc">IT sohasidagilar uchun maxsus ingliz tili, texnik terminlar va xalqaro suhbatlarga tayyorgarlik.</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-end pt-3 border-top border-secondary">
+                            <div>
+                                <div class="course-price-label">Kurs narxi:</div>
+                                <div class="course-price-val">400000 so'm</div>
+                            </div>
+                            <a href="/courses/ingliz-tili/" class="btn-batafsil">Batafsil &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- 5. TEZ-TEZ BERILADIGAN SAVOLLAR (FAQ) -->
+        <h2 class="section-title">Tez-tez beriladigan savollar</h2>
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                O'quv kurslariga yosh chegarasi qanday?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Bizning markazimizda qabul qoidalari bo'yicha yosh chegarasi <strong>10 yoshdan 36 yoshgacha</strong> etib belgilangan. Ushbu yosh oralig'idagi barcha xohlovchilar ariza topshirishlari mumkin.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                Darslar haftasiga necha kun bo'ladi?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Asosiy darslar odatda haftasiga 3 kun (toq yoki juft kunlari) olib boriladi. Shuningdek, o'quvchilar mustaqil shug'ullanishi uchun kompyuter xonalari har kuni ochiq bo'ladi.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3 rounded shadow-sm">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                Oldindan dasturlashni bilish talab etiladimi?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yo'q, mutlaqo shart emas. Bizning ko'pchilik kurslarimiz "noldan" boshlanadi va barcha boshlang'ich tushunchalar bosqichma-bosqich o'rgatiladi.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. MANZIL VA BOG'LANISH -->
+        <div class="card p-5 mb-5 shadow-sm">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="fs-3 me-3 text-warning">📍</span>
+                        <h3 class="text-white fw-bold m-0">Markazimizga tashrif buyuring</h3>
+                    </div>
+                    <p class="text-gray mb-3">O'quv markazimiz haqida to'liqroq ma'lumot olish yoki darslarga yozilish uchun biz bilan bevosita bog'laning yoki markazimizga kelib tanishing.</p>
+                    <p class="mb-2 text-light"><strong>Manzil:</strong> Farg'ona viloyati, Toshloq tumani</p>
+                    <p class="mb-0 text-light"><strong>Telefon:</strong> <a href="tel:+998938887829" class="text-warning text-decoration-none fw-bold">+998 (93) 888-78-29</a></p>
+                </div>
+                <div class="col-md-4 text-center mt-4 mt-md-0">
+                    <a href="/apply/" class="btn btn-success btn-lg w-100 py-3 fw-bold shadow">Onlayn Ariza Berish</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PASTDAGI BANNER -->
+        <div class="p-5 rounded-4 text-center shadow-lg" style="background: linear-gradient(135deg, #111622 0%, #1a2233 100%); border: 1px solid #21262d;">
+            <h1 class="display-5 fw-bold text-white mb-3">Kelajak kasblarini biz bilan o'rganing!</h1>
+            <p class="lead text-gray mb-4">Zamonaviy dasturlash, veb-dizayn va IT yo'nalishlari bo'yicha professional ta'lim oling va o'z karyerangizga hoziroq poydevor qo'ying.</p>
+            <a href="/apply/" class="btn btn-primary btn-lg px-5 fw-bold shadow">Hozir ariza topshirish</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 text-gray border-top border-secondary mt-5" style="border-color: #21262d !important;">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center text-sm">
+            <div class="mb-2 mb-md-0">
+                <span class="me-2">💻</span> <strong>IT Shaharcha</strong><br>
+                <small class="text-gray">Farg'ona viloyati, Toshloq tumani | Tel: +998 (93) 888-78-29</small>
+            </div>
+            <div>
+                <small class="text-gray">&copy; 2026 IT Shaharcha. Barcha huquqlar himoyalangan.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

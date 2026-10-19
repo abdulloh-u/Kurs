@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Kurslarni Boshqarish - IT Shaharcha{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<div class="row mb-4 align-items-center">
+    <div class="col-md-6">
+        <h2 class="fw-bold text-white fs-3 mb-1">
+            <i class="bi bi-journal-richtext text-warning me-2"></i> Kurslarni Boshqarish
+        </h2>
+        <p class="text-light opacity-75 small mb-0">Platformadagi barcha kurslar ro'yxati, narxi va davomiyligi</p>
+    </div>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0 d-flex justify-content-md-end gap-2">
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-light px-3 py-2 fw-semibold rounded-3 text-decoration-none">
+            <i class="bi bi-arrow-left me-1"></i> Arizalarga qaytish
+        </a>
+        <a href="{% url 'admin_course_add' %}" class="btn btn-warning px-3 py-2 fw-bold text-dark rounded-3 text-decoration-none shadow">
+            <i class="bi bi-plus-lg me-1"></i> Yangi kurs qo'shish
+        </a>
+    </div>
+</div>
+
+<div class="card bg-dark text-white border-0 shadow-lg rounded-4 overflow-hidden" style="border: 1px solid #30363d !important;">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0" style="background: transparent; font-size: 14px;">
+                <thead style="background: #21262d; border-bottom: 1px solid #30363d; color: #c9d1d9;">
+                    <tr>
+                        <th class="py-3 px-3">#ID</th>
+                        <th class="py-3">Kurs Nomi</th>
+                        <th class="py-3">Narxi</th>
+                        <th class="py-3">Davomiyligi</th>
+                        <th class="py-3">Tavsifi</th>
+                        <th class="py-3 text-end px-3">Amallar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                        <tr style="border-bottom: 1px solid #30363d;">
+                            <td class="px-3 fw-bold text-warning">#{{ course.id }}</td>
+                            <td class="fw-semibold text-white">{{ course.title }}</td>
+                            <td class="text-warning fw-bold">{{ course.price|floatformat:0 }} so'm</td>
+                            <td><span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-25 px-2.5 py-1">{{ course.duration }}</span></td>
+                            <td class="text-light opacity-75">{{ course.description|truncatewords:8 }}</td>
+                            <td class="text-end px-3">
+                                <div class="d-flex align-items-center justify-content-end gap-2">
+                                    <a href="{% url 'admin_course_edit' course.id %}" class="btn btn-sm btn-outline-warning rounded-2" title="Tahrirlash">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                    <a href="{% url 'admin_course_delete' course.id %}" onclick="return confirm('Haqiqatdan ham ushbu kursni o\'chirmoqchimisiz?');" class="btn btn-sm btn-outline-danger rounded-2" title="O'chirish">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-light opacity-75">
+                                <i class="bi bi-journal-x fs-2 mb-2 d-block text-secondary"></i>
+                                Hozircha kurslar mavjud emas. Yangi kurs qo'shing.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

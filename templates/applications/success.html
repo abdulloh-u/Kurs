@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Ariza qabul qilindi - IT Shaharcha{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-6 text-center">
+        <div class="p-5 card border-0 shadow-lg" style="background: #161b22; border: 1px solid #30363d !important; border-radius: 20px;">
+            <div class="mb-4">
+                <span class="bg-success bg-opacity-10 text-success border border-success border-opacity-25 p-3.5 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                    <i class="fa-solid fa-check fs-2"></i>
+                </span>
+            </div>
+            
+            <h2 class="fw-bold text-white mb-3">Rahmat!</h2>
+            <p class="text-light mb-4" style="line-height: 1.6; font-size: 15px;">
+                Arizangiz muvaffaqiyatli qabul qilindi. Operatorlarimiz tez orada siz bilan bog'lanishadi va barcha savollaringizga javob berishadi.
+            </p>
+
+            <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'home' %}" class="btn btn-warning px-4 py-2.5 fw-bold text-dark rounded-3 text-decoration-none">
+                    <i class="fa-solid fa-house me-2"></i> Bosh sahifaga qaytish
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark"><i class="fas fa-chart-line text-primary me-2"></i>IT Shaharcha — Admin Panel</h2>
+    <a href="{% url 'export_applications_csv' %}" class="btn btn-outline-success fw-bold">
+      <i class="fas fa-file-excel me-1"></i> CSV Eksport
+    </a>
+  </div>
+
+  <!-- Stat Kartalari -->
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm border-start border-primary border-4 p-3">
+        <div class="text-muted small">Jami Arizalar</div>
+        <div class="h3 fw-bold mb-0 text-primary">{{ total_applications }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm border-start border-warning border-4 p-3">
+        <div class="text-muted small">Yangi Arizalar</div>
+        <div class="h3 fw-bold mb-0 text-warning">{{ new_applications }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm border-start border-success border-4 p-3">
+        <div class="text-muted small">Qabul Qilinganlar</div>
+        <div class="h3 fw-bold mb-0 text-success">{{ accepted_applications }}</div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-0 shadow-sm border-start border-info border-4 p-3">
+        <div class="text-muted small">Foydalanuvchilar</div>
+        <div class="h3 fw-bold mb-0 text-info">{{ total_users }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grafik va Diagrammalar -->
+  <div class="row g-4 mb-4">
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h5 class="fw-bold mb-3">Oylar Bo'yicha Arizalar Dinamikasi</h5>
+        <canvas id="monthlyChart"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm p-4 h-100">
+        <h5 class="fw-bold mb-3">Kurslar Bo'yicha Qabul</h5>
+        <canvas id="coursesChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- So'nggi Arizalar Jadvali -->
+  <div class="card border-0 shadow-sm p-4">
+    <h5 class="fw-bold mb-3">So'nggi Kelgan Arizalar</h5>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>#ID</th>
+            <th>F.I.O</th>
+            <th>Sinf</th>
+            <th>Telefon</th>
+            <th>Kurs</th>
+            <th>Turi</th>
+            <th>Holat</th>
+            <th>Amal</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for app in recent_applications %}
+          <tr>
+            <td>#{{ app.id }}</td>
+            <td class="fw-semibold">{{ app.first_name }} {{ app.last_name }}</td>
+            <td>{{ app.school_grade }}-sinf</td>
+            <td>{{ app.phone_number }}</td>
+            <td><span class="badge bg-secondary">{{ app.course.title }}</span></td>
+            <td>
+              {% if app.user %}
+                <span class="badge bg-success">Akauntli</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">Mehmon</span>
+              {% endif %}
+            </td>
+            <td>
+              <span class="badge 
+                {% if app.status == 'new' %}bg-warning
+                {% elif app.status == 'accepted' %}bg-success
+                {% elif app.status == 'rejected' %}bg-danger
+                {% else %}bg-info{% endif %}">
+                {{ app.get_status_display }}
+              </span>
+            </td>
+            <td>
+              <form method="POST" action="{% url 'update_application_status' app.id %}" class="d-flex gap-1">
+                {% csrf_token %}
+                <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                  {% for code, name in status_choices %}
+                    <option value="{{ code }}" {% if app.status == code %}selected{% endif %}>{{ name }}</option>
+                  {% endfor %}
+                </select>
+              </form>
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="8" class="text-center text-muted">Hozircha arizalar mavjud emas.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js Skriptlari -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Oylik Grafik
+  const ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+  new Chart(ctxMonthly, {
+    type: 'line',
+    data: {
+      labels: {{ monthly_labels|safe }},
+      datasets: [{
+        label: 'Arizalar soni',
+        data: {{ monthly_data|safe }},
+        borderColor: '#0056b3',
+        backgroundColor: 'rgba(0, 86, 179, 0.1)',
+        fill: true,
+        tension: 0.3
+      }]
+    }
+  });
+
+  // Kurslar Bo'yicha Pie Chart
+  const ctxCourses = document.getElementById('coursesChart').getContext('2d');
+  new Chart(ctxCourses, {
+    type: 'doughnut',
+    data: {
+      labels: {{ course_labels|safe }},
+      datasets: [{
+        data: {{ course_data|safe }},
+        backgroundColor: ['#0056b3', '#00d2ff', '#ffc107', '#198754', '#6c757d']
+      }]
+    }
+  });
+</script>
+{% endblock %}
